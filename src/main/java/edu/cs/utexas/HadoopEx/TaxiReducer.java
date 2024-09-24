@@ -6,9 +6,12 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-public class WordCountReducer extends  Reducer<Text, IntWritable, Text, IntWritable> {
+public class TaxiReducer extends  Reducer<IntWritable, IntWritable, IntWritable, IntWritable> {
 
-   public void reduce(Text text, Iterable<IntWritable> values, Context context)
+    private PriorityQueue<WordAndCount> pq = new PriorityQueue<WordAndCount>(3);
+
+
+   public void reduce(IntWritable hour, Iterable<IntWritable> values, Context context)
            throws IOException, InterruptedException {
 	   
        int sum = 0;
@@ -17,6 +20,6 @@ public class WordCountReducer extends  Reducer<Text, IntWritable, Text, IntWrita
            sum += value.get();
        }
        
-       context.write(text, new IntWritable(sum));
+       context.write(hour, new IntWritable(sum));
    }
 }
