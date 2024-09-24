@@ -2,11 +2,11 @@
 
 ## Team members' names 
 
-1. Student Name:
+1. Student Name: Miran Ahmed
 
-   Student UT EID:
+   Student UT EID: ma64965
 
-2. Student Name:
+2. Student Name: 
 
    Student UT EID:
 
