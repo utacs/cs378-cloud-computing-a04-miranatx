@@ -2,33 +2,35 @@ package edu.cs.utexas.HadoopEx;
 
 
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.Text;
 
 
-public class TaxiError implements Comparable<TaxiError> {
+public class TaxiErrorRate implements Comparable<TaxiErrorRate> {
 
-        private final IntWritable hour;
-        private final IntWritable error;
+        private final Text taxi;
+        private final FloatWritable error;
 
-        public TaxiError( IntWritable hour, IntWritable error) {
-            this.hour = hour;
-            this.error = error;
+        public TaxiErrorRate(Text taxi, FloatWritable error) {
+          this.taxi = taxi;
+          this.error = error; 
         }
 
-        public IntWritable getHour() {
-            return hour;
+        public Text getTaxi() {
+          return taxi;
         }
 
-        public IntWritable getError() {
-            return error;
+        public FloatWritable getErrorRate() {
+          return error;
         }
+
     /**
      * Compares two sort data objects by their value.
      * @param other
      * @return 0 if equal, negative if this < other, positive if this > other
      */
         @Override
-        public int compareTo(TaxiError other) {
+        public int compareTo(TaxiErrorRate other) {
 
             float diff = error.get() - other.error.get();
             if (diff > 0) {
@@ -42,7 +44,7 @@ public class TaxiError implements Comparable<TaxiError> {
 
         public String toString(){
 
-            return "("+ hour.toString() +" , "+ error.toString() +")";
+            return "("+ taxi.toString() +" , "+ error.toString() +")";
         }
     }
 

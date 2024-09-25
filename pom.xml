@@ -35,7 +35,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>edu.cs.utexas.HadoopEx.WordCount</mainClass>
+							<mainClass>edu.cs.utexas.HadoopEx.Driver</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

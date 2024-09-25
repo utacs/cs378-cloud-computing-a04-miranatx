@@ -6,9 +6,13 @@
 
    Student UT EID: ma64965
 
-2. Student Name: 
+2. Student Name: Jean-Claude Bissou
 
-   Student UT EID:
+   Student UT EID: jb78473
+
+3. Student Name: Noah Aguillon
+
+   Student UT EID: na25956
 
  ...
 
