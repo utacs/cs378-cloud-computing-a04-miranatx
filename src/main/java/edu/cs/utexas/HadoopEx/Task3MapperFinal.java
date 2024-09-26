@@ -16,9 +16,9 @@ import java.util.HashSet;
 import org.apache.log4j.Logger;
 
 //CODE ON THAT THANG
-public class TaskTUAHMapper extends Mapper<Text, IntArrayWritable, Text, FloatWritable> {
+public class Task3MapperFinal extends Mapper<Text, FloatArrayWritable, Text, FloatWritable> {
 
-	private PriorityQueue<TaxiErrorRate> pq;
+	private PriorityQueue<TaxiEarnings> pq;
 
 	public void setup(Context context) {
 		pq = new PriorityQueue<>();
@@ -30,25 +30,18 @@ public class TaskTUAHMapper extends Mapper<Text, IntArrayWritable, Text, FloatWr
 	 * @param key
 	 * @param value a float value stored as a string
 	 */
-	public void map(Text key, IntArrayWritable value, Context context)
+	public void map(Text key, FloatArrayWritable value, Context context)
 			throws IOException, InterruptedException {
 
 		Writable[] writableArray = value.get();
-		IntWritable errorCount = ((IntWritable) writableArray[0]);
-		IntWritable totalRides = ((IntWritable) writableArray[1]);
+		FloatWritable total_amount = ((FloatWritable) writableArray[0]);
+		FloatWritable seconds = ((FloatWritable) writableArray[1]);
 
-		if (totalRides.get() != 0) {
-			float errorRate = (float) errorCount.get() / totalRides.get();
-			if(errorRate == 2.0f){
-				System.out.println("Error count: " + errorCount.get());
-				System.out.println("Total rides: " + totalRides.get());
-			}
-			pq.offer(new TaxiErrorRate(new Text(key.toString()), new FloatWritable(errorRate)));
-		} else {
-			pq.offer(new TaxiErrorRate(new Text(key.toString()), new FloatWritable(0f)));
-		}
+		float earnings = (float) total_amount.get() / (seconds.get() / 60f);
+		earnings = Math.round(earnings * 100f) / 100f;
+		pq.offer(new TaxiEarnings(new Text(key.toString()), new FloatWritable(earnings)));
 
-		if (pq.size() > 5) {
+		if (pq.size() > 10) {
 			// System.out.println(pq);
 			pq.poll();
 		}
@@ -57,9 +50,9 @@ public class TaskTUAHMapper extends Mapper<Text, IntArrayWritable, Text, FloatWr
 	public void cleanup(Context context) throws IOException, InterruptedException {
 		// System.out.println(pq);
 		while (pq.size() > 0) {
-			TaxiErrorRate taxi = pq.poll();
+			TaxiEarnings taxi = pq.poll();
 			// System.out.println(taxi.toString());
-			context.write(taxi.getTaxi(), taxi.getErrorRate());
+			context.write(taxi.getTaxi(), taxi.getEarningsRate());
 		}
 	}
 

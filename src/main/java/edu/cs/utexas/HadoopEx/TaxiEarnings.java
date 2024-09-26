@@ -1,37 +1,32 @@
 package edu.cs.utexas.HadoopEx;
 
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.Text;
 
-public class TaxiErrorRate implements Comparable<TaxiErrorRate> {
+public class TaxiEarnings implements Comparable<TaxiEarnings> {
 
   private final Text taxi;
-  private final FloatWritable error;
+  private final FloatWritable earningsRate;
 
-  public TaxiErrorRate(Text taxi, FloatWritable error) {
+  // Constructor
+  public TaxiEarnings(Text taxi, FloatWritable earningsRate) {
     this.taxi = taxi;
-    this.error = error;
+    this.earningsRate = earningsRate;
   }
 
+  // Getters
   public Text getTaxi() {
     return taxi;
   }
 
-  public FloatWritable getErrorRate() {
-    return error;
+  public FloatWritable getEarningsRate() {
+    return earningsRate;
   }
 
-  /**
-   * Compares two sort data objects by their value.
-   * 
-   * @param other
-   * @return 0 if equal, negative if this < other, positive if this > other
-   */
+  // Comparison based on earnings rate
   @Override
-  public int compareTo(TaxiErrorRate other) {
-
-    float diff = error.get() - other.error.get();
+  public int compareTo(TaxiEarnings other) {
+    float diff = earningsRate.get() - other.earningsRate.get();
     if (diff > 0) {
       return 1;
     } else if (diff < 0) {
@@ -40,9 +35,10 @@ public class TaxiErrorRate implements Comparable<TaxiErrorRate> {
     return 0;
   }
 
+  // toString method
+  @Override
   public String toString() {
-
-    return "(" + taxi.toString() + " , " + error.toString() + ")";
+    return "(" + taxi.toString() + " , Earnings Rate: " + earningsRate.toString() + ")";
   }
 
   // Override equals to compare only the taxi (key)
@@ -55,7 +51,7 @@ public class TaxiErrorRate implements Comparable<TaxiErrorRate> {
       return false;
     }
 
-    TaxiErrorRate that = (TaxiErrorRate) obj;
+    TaxiEarnings that = (TaxiEarnings) obj;
 
     // Check if the taxi (key) fields are equal
     return this.taxi.equals(that.taxi);

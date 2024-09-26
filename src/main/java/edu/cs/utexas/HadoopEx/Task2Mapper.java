@@ -9,7 +9,7 @@ import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapred.join.TupleWritable;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class Task2Mapper extends Mapper<Object, Text, Text, TupleWritable> {
+public class Task2Mapper extends Mapper<Object, Text, Text, IntArrayWritable> {
 
   public void map(Object key, Text value, Context context)
       throws IOException, InterruptedException {
@@ -51,31 +51,18 @@ public class Task2Mapper extends Mapper<Object, Text, Text, TupleWritable> {
       try {
         float plong = Float.parseFloat(fields[6]); // pickup longitude
         float plat = Float.parseFloat(fields[7]); // pickup latitude
+        float dlong = Float.parseFloat(fields[8]); // dropoff longitude
+        float dlat = Float.parseFloat(fields[9]); // dropoff latitude
 
-        if (plong == 0 || plat == 0) {
+        if (plong == 0 || plat == 0 || dlong == 0 || dlat == 0) {
           context.write(new Text(medallion),
-              new TupleWritable(new Writable[] { new IntWritable(1), new IntWritable(0) }));// Increment error count by
-                                                                                            // one for pickup
+            new IntArrayWritable(new IntWritable[] { new IntWritable(1), new IntWritable(0) }));
         }
         // System.out.println("Error count: " + errorcount.get());
 
       } catch (NumberFormatException e) {
         context.write(new Text(medallion),
-            new TupleWritable(new Writable[] { new IntWritable(1), new IntWritable(0) }));
-      }
-
-      try {
-        float dlong = Float.parseFloat(fields[8]); // dropoff longitude
-        float dlat = Float.parseFloat(fields[9]); // dropoff latitude
-        if (dlong == 0 || dlat == 0) {
-          context.write(new Text(medallion),
-              new TupleWritable(new Writable[] { new IntWritable(1), new IntWritable(0) }));// Increment error count by
-                                                                                            // one for pickup
-        }
-
-      } catch (NumberFormatException e) {
-        context.write(new Text(medallion),
-            new TupleWritable(new Writable[] { new IntWritable(1), new IntWritable(0) }));
+            new IntArrayWritable(new IntWritable[] { new IntWritable(1), new IntWritable(0) }));
       }
 
       try {
@@ -85,8 +72,8 @@ public class Task2Mapper extends Mapper<Object, Text, Text, TupleWritable> {
           System.out.println("Error count: " + errorcount.get());
         }
 
-        context.write(new Text (medallion),
-            new TupleWritable(new Writable[] { new IntWritable(0), new IntWritable(1) }));
+        context.write(new Text(medallion),
+            new IntArrayWritable(new IntWritable[] { new IntWritable(0), new IntWritable(1) }));
       } catch (NumberFormatException e) {
         System.out.println("Error parsing hour");
       }
