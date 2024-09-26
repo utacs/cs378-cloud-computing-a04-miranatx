@@ -31,6 +31,10 @@ public class Task3Mapper extends Mapper<Object, Text, Text, FloatArrayWritable> 
 
                 float compare = surcharge + tax + tip + tolls + fare;
 
+                if(totalAmount >= 500){
+                    valid = false;
+                }
+
                 if (Math.abs(totalAmount - compare) >= 0.001f) {
                     valid = false;
                 }

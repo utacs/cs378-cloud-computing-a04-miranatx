@@ -56,7 +56,7 @@ public class Driver extends Configured implements Tool {
 			FileInputFormat.addInputPath(job, new Path(args[0]));
 			job.setInputFormatClass(TextInputFormat.class);
 
-			FileOutputFormat.setOutputPath(job, new Path("output_task1"));
+			FileOutputFormat.setOutputPath(job, new Path(args[1] + "/output_task1"));
 			job.setOutputFormatClass(TextOutputFormat.class);
 
 			if (!job.waitForCompletion(true)) {
@@ -76,7 +76,7 @@ public class Driver extends Configured implements Tool {
 			job1.setOutputValueClass(IntArrayWritable.class);
 
 			FileInputFormat.addInputPath(job1, new Path(args[0]));
-			FileOutputFormat.setOutputPath(job1, new Path("output_task2"));
+			FileOutputFormat.setOutputPath(job1, new Path(args[1] + "/output_task2"));
 
 			job1.setInputFormatClass(TextInputFormat.class);
 			job1.setOutputFormatClass(SequenceFileOutputFormat.class);
@@ -97,8 +97,8 @@ public class Driver extends Configured implements Tool {
 			job2.setOutputKeyClass(Text.class);
 			job2.setOutputValueClass(FloatWritable.class);
 
-			FileInputFormat.addInputPath(job2, new Path("output_task2"));
-			FileOutputFormat.setOutputPath(job2, new Path("output_taskTUAH"));
+			FileInputFormat.addInputPath(job2, new Path(args[1] + "/output_task2"));
+			FileOutputFormat.setOutputPath(job2, new Path(args[1] + "/output_taskTUAH"));
 
 			job2.setInputFormatClass(SequenceFileInputFormat.class);
 			job2.setOutputFormatClass(TextOutputFormat.class);
@@ -120,7 +120,7 @@ public class Driver extends Configured implements Tool {
 			job3.setOutputValueClass(FloatArrayWritable.class);
 
 			FileInputFormat.addInputPath(job3, new Path(args[0]));
-			FileOutputFormat.setOutputPath(job3, new Path("output_task3_mid"));
+			FileOutputFormat.setOutputPath(job3, new Path(args[1] + "/output_task3_mid"));
 
 			job3.setInputFormatClass(TextInputFormat.class);
 			job3.setOutputFormatClass(SequenceFileOutputFormat.class);
@@ -141,8 +141,8 @@ public class Driver extends Configured implements Tool {
 			job4.setOutputKeyClass(Text.class);
 			job4.setOutputValueClass(FloatWritable.class);
 
-			FileInputFormat.addInputPath(job4, new Path("output_task3_mid"));
-			FileOutputFormat.setOutputPath(job4, new Path("output_task3final"));
+			FileInputFormat.addInputPath(job4, new Path(args[1] + "/output_task3_mid"));
+			FileOutputFormat.setOutputPath(job4, new Path(args[1] + "/output_task3final"));
 
 			job4.setInputFormatClass(SequenceFileInputFormat.class);
 			job4.setOutputFormatClass(TextOutputFormat.class);
