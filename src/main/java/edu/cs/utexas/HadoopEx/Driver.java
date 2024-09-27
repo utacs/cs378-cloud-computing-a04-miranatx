@@ -58,6 +58,8 @@ public class Driver extends Configured implements Tool {
 
 			FileOutputFormat.setOutputPath(job, new Path(args[1] + "/output_task1"));
 			job.setOutputFormatClass(TextOutputFormat.class);
+			
+			job.setNumReduceTasks(1);
 
 			if (!job.waitForCompletion(true)) {
 				System.exit(1);
@@ -81,6 +83,8 @@ public class Driver extends Configured implements Tool {
 			job1.setInputFormatClass(TextInputFormat.class);
 			job1.setOutputFormatClass(SequenceFileOutputFormat.class);
 
+			//job1.setNumReduceTasks(1);
+
 			if (!job1.waitForCompletion(true)) {
 					System.exit(1);
 			}
@@ -103,9 +107,11 @@ public class Driver extends Configured implements Tool {
 			job2.setInputFormatClass(SequenceFileInputFormat.class);
 			job2.setOutputFormatClass(TextOutputFormat.class);
 
+			job2.setNumReduceTasks(1);
+
 			if (!job2.waitForCompletion(true)) {
 				System.exit(1);
-		}
+			}
 
 			// Job 3: First Mapper -> First Reducer
 			Job job3 = Job.getInstance(conf, "Task3mid");
@@ -124,6 +130,8 @@ public class Driver extends Configured implements Tool {
 
 			job3.setInputFormatClass(TextInputFormat.class);
 			job3.setOutputFormatClass(SequenceFileOutputFormat.class);
+
+			//job3.setNumReduceTasks(1);
 
 			if (!job3.waitForCompletion(true)) {
 					System.exit(1);
@@ -146,6 +154,8 @@ public class Driver extends Configured implements Tool {
 
 			job4.setInputFormatClass(SequenceFileInputFormat.class);
 			job4.setOutputFormatClass(TextOutputFormat.class);
+
+			job4.setNumReduceTasks(1);
 
 			return job4.waitForCompletion(true) ? 0 : 1;
 
